@@ -1,0 +1,1 @@
+<img src="{{asset('images/reg_icon.gif')}}" width=180 alt="reg icon">
