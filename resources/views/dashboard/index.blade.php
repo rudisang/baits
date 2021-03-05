@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 @section('breadcrumb')
    
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" >
             <div class="container">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb mt-4" style="background:#fff;max-width:400px;">
               <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{Auth::user()->role->role}} Account</li>
             </ol>
@@ -18,8 +18,8 @@
 @endif
 
 <!-- Bidder Dashboard Views -->
-   <section class="container my-5">
-    <div class="card">
+   <section class="container my-4">
+    <div class="card" style="border: none">
         <h5 class="card-header" style="background: #fff">My Bids</h5>
         <div class="card-body">
             <h2 class="text-center">Nothing Yet</h2>

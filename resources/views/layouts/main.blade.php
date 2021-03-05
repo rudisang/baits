@@ -6,16 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <title>Cattle Biider App</title>
+    <style>
+        .trim{
+            max-height: 60vh;
+        }
+    </style>
 </head>
 <body>
    <header>
        <x-navigation-bar />
+
    </header>
 
    <main>
        @yield('content')
    </main>
-    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+   <script src="{{asset('js/jquery.min.js')}}"></script>
+   <script src="{{asset('js/bootstrap.popper.min.js')}}"></script>
+   <script src="{{asset('js/bootstrap.min.js')}}"></script>
 </body>
 </html>   
 

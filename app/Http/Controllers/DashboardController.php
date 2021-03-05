@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\User;
 use Auth;
@@ -14,6 +15,11 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
      
@@ -23,6 +29,36 @@ class DashboardController extends Controller
 
     public function editAccount(){
         return view('dashboard.edit-account');
+    }
+
+    public function updatePassword(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        $oldpass = $request->old_pass;
+        $newpass = $request->new_pass;
+        $confpass = $request->conf_pass;
+
+        if (Hash::check($oldpass, $user->password)) {
+            if($newpass == $confpass){
+                $request->validate([
+                    'new_pass' => 'required|string|min:6',
+                    'conf_pass' => 'required|string|min:6',
+                    'old_pass' => 'required|string|min:6',
+                ]);
+
+                $user->password = Hash::make($request->new_pass);
+                $user->save();
+                return back()->with("success", "Awesome! Password Updated");
+
+            }else{
+                return back()->with("error", "New Password & Confirm Password Don't Match");
+            }
+        }else{
+            return back()->with("error", "The password you entered does not match your current password");
+
+        }
+
+
     }
 
     /**
