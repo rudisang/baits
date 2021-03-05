@@ -10,21 +10,41 @@
                  <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" name="name" class="form-control" value="{{Auth::user()->name}}" id="name" aria-describedby="emailHelp">
+                    @if ($errors->has('name'))
+                    <span class="help-block">
+                        <strong style="color:red">{{ $errors->first('name') }}</strong>
+                    </span>
+                @endif
                   </div>
 
                   <div class="mb-3">
                     <label for="surname" class="form-label">Surname</label>
                     <input type="text" name="surname" class="form-control" value="{{Auth::user()->surname}}" id="surname">
+                    @if ($errors->has('surname'))
+                    <span class="help-block">
+                        <strong style="color:red">{{ $errors->first('surname') }}</strong>
+                    </span>
+                @endif
                   </div>
 
                   <div class="mb-3">
                     <label for="mobile" class="form-label">Mobile Number</label>
                     <input type="number" name="mobile" class="form-control" value="{{Auth::user()->mobile}}" id="mobile">
+                    @if ($errors->has('mobile'))
+                    <span class="help-block">
+                        <strong style="color:red">{{ $errors->first('mobile') }}</strong>
+                    </span>
+                @endif
                   </div>
 
                   <div class="mb-3">
                     <label for="age" class="form-label">Age</label>
                     <input type="number" name="age" class="form-control" value="{{Auth::user()->age}}" id="age">
+                    @if ($errors->has('age'))
+                    <span class="help-block">
+                        <strong style="color:red">{{ $errors->first('age') }}</strong>
+                    </span>
+                @endif
                   </div>
 
                   <div class="mb-3">
@@ -36,6 +56,11 @@
                                <option value="{{ $item }}" @if(Auth::user()->gender=== $item) selected='selected' @endif> {{ $item }}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('gender'))
+                        <span class="help-block">
+                            <strong style="color:red">{{ $errors->first('gender') }}</strong>
+                        </span>
+                    @endif
                       </div>
                   </div>
 
@@ -49,6 +74,11 @@
                                {{$count++}}
                             @endforeach
                         </select>
+                        @if ($errors->has('role_id'))
+                        <span class="help-block">
+                            <strong style="color:red">{{ $errors->first('role_id') }}</strong>
+                        </span>
+                    @endif
                       </div>
                   </div>
    
