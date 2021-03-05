@@ -1,7 +1,9 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">
+            <img class="" src="{{asset('images/reg_icon.gif')}}" width=80 alt="reg icon">
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -11,10 +13,10 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Latest Bids</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                <a class="nav-link" href="#">About</a>
               </li>
             </ul>
         
@@ -29,7 +31,13 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a></li>
-                          <li><a class="dropdown-item" href="#">Logout</a></li>
+                          <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <li><a onclick="event.preventDefault();
+                                this.closest('form').submit();" class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                        </form>
+
                         </ul>
                       </li>
    

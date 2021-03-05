@@ -8,7 +8,16 @@
              <title>Cattle Biider App</title>
          </head>
          <body>
-            <x-navigation-bar />
+            <header>
+                <x-navigation-bar />
+            </header>
+            <section>
+                <x-main-carousel />
+            </section>
+
+            <main>
+                @yield('content')
+            </main>
              <script src="{{asset('js/bootstrap.min.js')}}"></script>
          </body>
          </html>   

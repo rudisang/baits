@@ -1,5 +1,9 @@
 <x-guest-layout>
+
     <x-auth-card>
+        <div class="container text-center">
+            <h2 style="font-weight: bold">Login</h2>
+        </div>
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
