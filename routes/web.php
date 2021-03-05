@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard/account', [DashboardController::class, 'editAccount']);
 Route::patch('/dashboard/account/update-password', [DashboardController::class, 'updatePassword']);
+Route::patch('/dashboard/account/update-details', [DashboardController::class, 'updateDetails']);
 Route::resource('/dashboard', DashboardController::class);
 
 require __DIR__.'/auth.php';

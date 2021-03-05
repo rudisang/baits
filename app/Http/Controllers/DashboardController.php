@@ -61,6 +61,30 @@ class DashboardController extends Controller
 
     }
 
+    public function updateDetails(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+            'age' => 'required',
+            'mobile' => 'required',
+            'role_id' => 'required',
+        ]);
+
+		$user = User::find(Auth::user()->id);
+
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->gender = $request->gender;
+        $user->age = $request->age;
+        $user->mobile = $request->mobile;
+        $user->role_id = intval($request->role_id);
+
+        $user->save();
+        return back()->with("success", "Details Updated Successfully");
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
