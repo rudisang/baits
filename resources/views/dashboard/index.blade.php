@@ -80,6 +80,10 @@
 
 @if(Auth::user()->role_id == 3)
 <section class="container my-4">
+  <a href="/dashboard/create-user" class="btn btn-info">Create New User</a>
+ </section>
+
+<section class="container my-4">
   <x-admin-user-table />
  </section>
 @endif

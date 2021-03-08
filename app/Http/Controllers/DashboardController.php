@@ -107,8 +107,39 @@ class DashboardController extends Controller
         $user->delete();
         return redirect('/dashboard')->with("success", "User id:".$user->id." Successfully Deleted");
 
+    }
+    public function createUser(){
+        $roles = Role::all();
+     return view('dashboard.create-user')->with('roles', $roles);
+    }
+
+    public function storeNewUser(Request $request){
+        $agelimit = date("2003-12-29");
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+            'age' => 'required|date|before:'.$agelimit,
+            'mobile' => 'required',
+            'role_id' => 'required',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:6',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'mobile' => $request->mobile,
+            'role_id' => intval($request->role_id),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
        
 
+        return redirect('/dashboard')->with('success', 'New User Added');
     }
 
     /**
