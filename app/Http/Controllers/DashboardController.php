@@ -103,10 +103,11 @@ class DashboardController extends Controller
     public function deleteUser($id){
        
 		$user = User::find($id);
-        dd($user);
+       
         $user->delete();
- 
-        return view('dashboard.index')->with("success", "User id:".$user->id." Successfully Deleted");
+        return redirect('/dashboard')->with("success", "User id:".$user->id." Successfully Deleted");
+
+       
 
     }
 
