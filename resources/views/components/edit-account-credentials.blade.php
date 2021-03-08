@@ -4,7 +4,7 @@
           <h5 class="card-title">Edit Account Credentials</h5>
           <hr>
            <div style="max-width:70%;margin:auto">
-            <form method="post" action="/dashboard/account/update-password">
+            <form method="post" action="/dashboard/account/update-password/{{Auth::user()->id}}">
                 {{ method_field('PATCH') }}
                  @csrf
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                                 @endif
                 </div>
    
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #374151;border:none">Save</button>
               </form>
            </div>
         </div>

@@ -24,15 +24,27 @@ class DashboardController extends Controller
     {
      
             $roles = Role::all();
-            return view('dashboard.index')->with('roles', $roles);
+            $users = User::all();
+            return view('dashboard.index')->with('roles', $roles)->with('users', $users);
+    }
+
+    public function editUser($id){
+        $user = User::find($id);
+
+        // Check for correct user
+        if(auth()->user()->role_id !== 3){
+            return redirect('/dashboard')->with('error', 'You are not authorized to view that page');
+        }
+
+        return view('/dashboard.edit-users')->with('user', $user);
     }
 
     public function editAccount(){
         return view('dashboard.edit-account');
     }
 
-    public function updatePassword(Request $request){
-        $user = User::find(Auth::user()->id);
+    public function updatePassword(Request $request, $id){
+        $user = User::find($id);
 
         $oldpass = $request->old_pass;
         $newpass = $request->new_pass;
@@ -61,17 +73,18 @@ class DashboardController extends Controller
 
     }
 
-    public function updateDetails(Request $request){
+    public function updateDetails(Request $request, $id){
+       
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'age' => 'required',
+            'age' => 'required|date',
             'mobile' => 'required',
             'role_id' => 'required',
         ]);
 
-		$user = User::find(Auth::user()->id);
+		$user = User::find($id);
 
         $user->name = $request->name;
         $user->surname = $request->surname;
@@ -80,8 +93,20 @@ class DashboardController extends Controller
         $user->mobile = $request->mobile;
         $user->role_id = intval($request->role_id);
 
+    
+            
         $user->save();
         return back()->with("success", "Details Updated Successfully");
+
+    }
+
+    public function deleteUser($id){
+       
+		$user = User::find($id);
+        dd($user);
+        $user->delete();
+ 
+        return view('dashboard.index')->with("success", "User id:".$user->id." Successfully Deleted");
 
     }
 

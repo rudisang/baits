@@ -29,9 +29,9 @@
             </div>
 
             <div>
-                <x-label for="age" :value="__('Age')" />
+                <x-label for="age" :value="__('Date of Birth')" />
 
-                <x-input id="age" class="block mt-1 w-full" type="number" min=13 max=150 name="age" :value="old('age')" required/>
+                <x-input id="age" class="block mt-1 w-full" type="date" name="age" :value="old('age')" required/>
             </div>
 
             <div>

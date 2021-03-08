@@ -35,11 +35,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $agelimit = date("2003-12-29");
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
-            'age' => 'required',
+            'age' => 'required|date|before:'.$agelimit,
             'mobile' => 'required',
             'role_id' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
