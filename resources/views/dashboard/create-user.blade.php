@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
-        <a href="/dashboard">back</a>
-
+        <a class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" href="/dashboard">&leftarrow; back</a>
+<br><br>
         <div class="container text-center">
             <h2 style="font-weight: bold">Create New User</h2>
         </div>
