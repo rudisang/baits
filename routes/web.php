@@ -18,6 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::patch('/location/edit/{id}', [DashboardController::class, 'editLocation']);
+Route::post('/location/register', [DashboardController::class, 'registerLocation']);
+Route::post('/keeper/register', [DashboardController::class, 'registerKeeper']);
 Route::post('/dashboard/create-user', [DashboardController::class, 'storeNewUser']);
 Route::get('/dashboard/create-user', [DashboardController::class, 'createUser']);
 Route::get('/dashboard/account', [DashboardController::class, 'editAccount']);

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Keeper;
+use App\Models\Location;
 use Auth;
 
 class DashboardController extends Controller
@@ -37,6 +39,66 @@ class DashboardController extends Controller
         }
 
         return view('/dashboard.edit-users')->with('user', $user);
+    }
+
+    public function registerKeeper(Request $request){
+
+        $keeper = new Keeper;
+        $keeper->user_id = auth()->user()->id;
+
+        $keeper->save();
+
+        return back()->with('success', 'Registration Complete');
+    }
+
+
+    
+    public function registerLocation(Request $request){
+        $request->validate([
+            'district' => 'required|string',
+            'zone' => 'required|string',
+            'extension_area' => 'required|string',
+            'crush' => 'required|string',
+            'holding_type' => 'required|string',
+        ]);
+
+
+        $location = new Location;
+        $location->district = $request->district;
+        $location->zone = $request->zone;
+        $location->extension_area = $request->extension_area;
+        $location->crush = $request->crush;
+        $location->holding_type = $request->holding_type;
+        $location->user_id = auth()->user()->id;
+
+       
+        $location->save();
+
+        return back()->with('success', 'Registration Complete');
+    }
+
+    public function editLocation(Request $request, $id){
+
+        $request->validate([
+            'district' => 'required|string',
+            'zone' => 'required|string',
+            'extension_area' => 'required|string',
+            'crush' => 'required|string',
+            'holding_type' => 'required|string',
+        ]);
+
+
+        $location = Location::find($id);
+        $location->district = $request->district;
+        $location->zone = $request->zone;
+        $location->extension_area = $request->extension_area;
+        $location->crush = $request->crush;
+        $location->holding_type = $request->holding_type;
+       
+    
+        $location->save();
+
+        return back()->with('success', 'Location Updated');
     }
 
     public function editAccount(){

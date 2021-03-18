@@ -35,7 +35,7 @@
 
     <section class="container my-4">
       <div class="card" style="border: none">
-          <h5 class="card-header" style="background: #fff">Current Bids</h5>
+          <h5 class="card-header" style="background: #fff">Dasboard</h5>
           <div class="card-body">
               <h3 class="text-center" style="color:grey">N/A</h3>
            <!-- <h5 class="card-title">Special title treatment</h5>
@@ -67,12 +67,25 @@
 <!-- Bidder Dashboard Views -->
 <section class="container my-4">
   <div class="card" style="border: none">
-      <h5 class="card-header" style="background: #fff">My Bids</h5>
+      <h5 class="card-header" style="background: #fff">{{Auth::user()->name}} | Dashboard</h5>
       <div class="card-body">
-          <h2 class="text-center">Nothing Yet</h2>
-       <!-- <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+
+          @if(Auth::user()->keeper)
+
+          @if(Auth::user()->location)
+          <a href="" class="btn btn-warning">Register Animal</a> 
+          <div class="my-4"><x-edit-location-form /></div>
+          @else
+          <x-location-form />
+          @endif
+            @else
+              <form method="POST" action="/keeper/register">
+              @csrf
+              <button type="submit" href="" class="btn btn-info">Get Kepper ID</button>
+              </form>
+          @endif
+
       </div>
     </div>
  </section>

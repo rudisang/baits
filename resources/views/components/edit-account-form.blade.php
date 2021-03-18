@@ -77,21 +77,7 @@
                   <input type="hidden" value="3" name="role_id">
 
                   @else
-                  <div class="mb-3">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Account Type</label>
-                        <select name="role_id" class="form-control" id="exampleFormControlSelect1">
-
-                               <option value="1" selected='selected'>Bidder</option>
-                               <option value="2">Seller</option>
-                        </select>
-                        @if ($errors->has('role_id'))
-                        <span class="help-block">
-                            <strong style="color:red">{{ $errors->first('role_id') }}</strong>
-                        </span>
-                    @endif
-                      </div>
-                  </div>
+                  <input type="hidden" value="1" name="role_id">
                   @endif
    
                 <button type="submit" class="btn btn-primary" style="background-color: #374151;border:none">Save</button>
