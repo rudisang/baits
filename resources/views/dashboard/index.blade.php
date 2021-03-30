@@ -15,7 +15,7 @@
 <section class="container my-4">
   <x-flash-messages />
 </section>
-<!-- Seller Dashboard Views -->
+<!-- Operator Dashboard Views -->
 @if(Auth::user()->role_id == 2)
     <section class="container my-4">
 
@@ -64,7 +64,7 @@
 @endif
 
 @if(Auth::user()->role_id == 1)
-<!-- Bidder Dashboard Views -->
+<!-- Farmer Dashboard Views -->
 <section class="container my-4">
   <div class="card" style="border: none">
       <h5 class="card-header" style="background: #fff">{{Auth::user()->name}} | Dashboard</h5>
@@ -74,21 +74,33 @@
           @if(Auth::user()->keeper)
 
           @if(Auth::user()->location)
-          <a href="" class="btn btn-warning">Register Animal</a> 
+          @if(Auth::user()->brand)  @else <x-brand-form-modal />@endif
           <div class="my-4"><x-edit-location-form /></div>
           @else
           <x-location-form />
           @endif
             @else
-              <form method="POST" action="/keeper/register">
-              @csrf
-              <button type="submit" href="" class="btn btn-info">Get Kepper ID</button>
-              </form>
+
+            <x-keeper-apply-modal />
+
           @endif
 
       </div>
     </div>
  </section>
+@endif
+
+@if(Auth::user()->brand)
+<section class="container my-4">
+  <div class="card" style="border: none">
+      <h5 class="card-header" style="background: #fff">Brand</h5>
+      <div class="card-body">
+        <p><strong>Brand:</strong> {{Auth::user()->brand->brand}}</p>
+        <p><strong>Shape:</strong> {{Auth::user()->brand->shape}}</p>
+        <a href="" class="btn btn-outline-warning">edit</a>
+      </div>
+  </div>
+</section>
 @endif
 
 @if(Auth::user()->role_id == 3)

@@ -37,6 +37,9 @@
                                     <select name="zone" class="form-control" id="exampleFormControlSelect1">
                                            <option value="" disabled selected>Select Zone</option>
                                            <option value="I11">I11</option>
+                                           <option value="C10">C10</option>
+                                           <option value="C12">C12</option>
+                                           <option value="D3">D3</option>
                                     </select>
                                     @if ($errors->has('zone'))
                                     <span class="help-block">

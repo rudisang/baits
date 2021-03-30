@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/brand/register', [DashboardController::class, 'registerBrand']);
 Route::patch('/location/edit/{id}', [DashboardController::class, 'editLocation']);
 Route::post('/location/register', [DashboardController::class, 'registerLocation']);
 Route::post('/keeper/register', [DashboardController::class, 'registerKeeper']);

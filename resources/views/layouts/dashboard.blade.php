@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <title>Dashboard Cattle Bidder App</title>
+    <title>Dashboard Baits System</title>
     <style>
         body {
             background-color: #F3F4F6;

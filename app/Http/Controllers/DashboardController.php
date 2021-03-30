@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Keeper;
 use App\Models\Location;
+use App\Models\Brand;
 use Auth;
 
 class DashboardController extends Controller
@@ -43,10 +44,27 @@ class DashboardController extends Controller
 
     public function registerKeeper(Request $request){
 
+        $type = $request->type;
+        $valid = date('Y-m-d', strtotime('+2 years'));
+
         $keeper = new Keeper;
         $keeper->user_id = auth()->user()->id;
+        $keeper->type = $type;
+        $keeper->valid_until = $valid;
 
         $keeper->save();
+
+        return back()->with('success', 'Registration Complete');
+    }
+
+    public function registerBrand(Request $request){
+
+        $brand = new Brand;
+
+        $brand->user_id = auth()->user()->id;
+        $brand->shape = $request->shape;
+        $brand->brand = $request->brand;
+        $brand->save();
 
         return back()->with('success', 'Registration Complete');
     }

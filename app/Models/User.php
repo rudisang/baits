@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Role');
     }
 
+    public function brand() {
+        return $this->hasOne('App\Models\Brand');
+    }
+
     public function keeper() {
         return $this->hasOne('App\Models\Keeper');
     }
