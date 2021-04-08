@@ -15,7 +15,26 @@
 <section class="container my-4">
   <x-flash-messages />
 </section>
-<!-- Operator Dashboard Views -->
+
+@if(Auth::user()->role_id == 4)
+    <section class="container my-4">
+
+    </section>
+
+    <section class="container my-4">
+      <div class="card" style="border: none">
+          <h5 class="card-header" style="background: #fff">Operator Dash <a href="/chat/room" style="float:right" class="btn btn-outline-info">Chat</a></h5>
+          <div class="card-body">
+              <h3 class="text-center" style="color:grey">N/A</h3>
+
+          </div>
+        </div>
+     </section>
+
+@endif
+
+
+<!-- Police Dashboard Views -->
 @if(Auth::user()->role_id == 2)
     <section class="container my-4">
 
@@ -45,17 +64,7 @@
         </div>
      </section>
 
-     <section class="container my-4">
-      <div class="card" style="border: none">
-          <h5 class="card-header" style="background: #fff">Bid History</h5>
-          <div class="card-body">
-              <h3 class="text-center" style="color:grey">N/A</h3>
-           <!-- <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a> -->
-          </div>
-        </div>
-     </section>
+
 
      <div style ="position: fixed; bottom: 30px;right:30px;background:rgb(180, 117, 0);padding:10px;border-radius:100%;">
       <a style="background:none;border:none;font-weight: 900;" class="btn btn-info" href="#">+</a>
@@ -67,15 +76,15 @@
 <!-- Farmer Dashboard Views -->
 <section class="container my-4">
   <div class="card" style="border: none">
-      <h5 class="card-header" style="background: #fff">{{Auth::user()->name}} | Dashboard</h5>
+      <h5 class="card-header" style="background: #fff">{{Auth::user()->name}} | Dashboard  <a href="/chat/room" style="float:right" class="btn btn-outline-info">Chat</a></h5>
       <div class="card-body">
 
-
+         
           @if(Auth::user()->keeper)
 
           @if(Auth::user()->location)
           @if(Auth::user()->brand)  @else <x-brand-form-modal />@endif
-          <div class="my-4"><x-edit-location-form /></div>
+          <div class="my-2"><x-edit-location-form /> <br><a class="btn btn-info" id="brand-btn" onclick="show()">View Brand</a></div>
           @else
           <x-location-form />
           @endif
@@ -88,20 +97,33 @@
       </div>
     </div>
  </section>
-@endif
 
+ 
 @if(Auth::user()->brand)
 <section class="container my-4">
+    <div class="card" style="border: none">
+        <h5 class="card-header" style="background: #fff">My Animals</h5>
+        <div class="card-body">
+          <a href="/animal/create" class="btn btn-info">Add Animals</a>
+            <x-user-animals-table />
+        </div>
+    </div>
+  </section>
+
+<section class="container my-4" id="brand" style="display:none">
   <div class="card" style="border: none">
       <h5 class="card-header" style="background: #fff">Brand</h5>
       <div class="card-body">
+
         <p><strong>Brand:</strong> {{Auth::user()->brand->brand}}</p>
         <p><strong>Shape:</strong> {{Auth::user()->brand->shape}}</p>
-        <a href="" class="btn btn-outline-warning">edit</a>
+     
       </div>
   </div>
 </section>
 @endif
+@endif
+
 
 @if(Auth::user()->role_id == 3)
 <section class="container my-4">
@@ -113,5 +135,20 @@
  </section>
 @endif
 
+<script>
+  var bool = true
+  var brandbtn = document.getElementById("brand-btn");
+  var brand = document.getElementById("brand");
 
+  function show(){
+    if(bool){
+      brand.style.display = "block";
+      bool = false
+    }else{
+      brand.style.display = "none";
+      bool = true
+    }
+    
+  }
+</script>
 @endsection

@@ -1,7 +1,7 @@
 <div>
                <!-- Button trigger modal -->
 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#keeper-apply">
-  Apply for Keeper ID
+  Register Keeper ID
 </button>
 
 <!-- Modal -->
@@ -21,7 +21,7 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Account Type</label>
                 <select name="type" class="form-control" id="exampleFormControlSelect1">
-                <option selected disabled>Select Account Type</option>
+                <option selected disabled>Select Keeper Type</option>
                 <option value="Individual">Individual</option>
                 <option value="Organization">Organization</option>
                 </select>

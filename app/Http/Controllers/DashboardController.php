@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Keeper;
 use App\Models\Location;
 use App\Models\Brand;
+use App\Models\Message;
+use App\Models\Animal;
 use Auth;
 
 class DashboardController extends Controller
@@ -227,9 +229,36 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createAnimalForm()
     {
-        //
+        return view('dashboard.create-animal');
+    }
+
+    public function storeAnimal(Request $request)
+    {
+        $request->validate([
+            'eid'=> 'required|string|max:255',
+            'analogue_id' => 'required|string|max:255|unique:animals',
+            'sex'=> 'required|string|max:255',
+            'colour'=> 'required|string|max:255',
+            'species'=> 'required|string|max:255',
+            'breed'=> 'required|string|max:255',
+            'age'=> 'required',
+        ]);
+
+        Animal::create([
+            'brand_id' => Auth::user()->brand->id,
+            'eid' => $request->eid,
+            'analogue_id' => $request->analogue_id,
+            'sex' => $request->sex,
+            'colour' => $request->colour,
+            'species' => $request->species,
+            'breed' => $request->breed,
+            'age' => $request->age,
+        ]);
+
+        return redirect('/dashboard')->with('success', 'Record Added');
+
     }
 
     /**
@@ -238,9 +267,39 @@ class DashboardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function chatIndex()
     {
-        //
+        $messages = Message::all();
+        return view('chat.index')->with('messages', $messages);
+    }
+
+    public function chatShow($id)
+    {
+        $user = User::find($id);
+
+        $mes = Message::where('from','=',$user->id)->where('to','=', Auth::user()->id)->get();
+        $mesgs= Message::where('from','=',Auth::user()->id)->where('to','=', $user->id)->get();
+
+        $messages = $mes->merge($mesgs);
+        
+      
+        return view('chat.show')->with('messages',$messages)->with('user',$user);
+    }
+
+    public function sendMessage(Request $request, $id)
+    {
+        $request->validate([
+            'message'=> 'required',
+        ]);
+
+        Message::create([
+            'user_id' => Auth::user()->id,
+            'to' => $id,
+            'from' => Auth::user()->id,
+            'message' => $request->message,
+        ]);
+
+        return back()->with('success','sent');
     }
 
     /**

@@ -54,6 +54,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Brand');
     }
 
+    public function messages() {
+        return $this->hasMany('App\Models\Message');
+    }
+
     public function keeper() {
         return $this->hasOne('App\Models\Keeper');
     }

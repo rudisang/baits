@@ -22,7 +22,7 @@
                 <label for="exampleFormControlSelect1">Shape</label>
                 <select name="shape" class="form-control" id="exampleFormControlSelect1" required>
                 <option selected disabled>Select Brand Shape</option>
-                <option value="Individual">Square</option>
+                <option value="Square">Square</option>
                 <option value="Triangle">Triangle</option>
                 <option value="Inverted-Triangle">Inverted-Triangle</option>
                 <option value="Inline">Inline</option>

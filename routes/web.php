@@ -18,6 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/chat/room', [DashboardController::class, 'chatIndex']);
+Route::get('/chat/room/{id}', [DashboardController::class, 'chatShow']);
+Route::post('/chat/send/{id}', [DashboardController::class, 'sendMessage']);
+
+Route::get('/animal/create', [DashboardController::class, 'createAnimalForm']);
+Route::post('/animal/create', [DashboardController::class, 'storeAnimal']);
+Route::patch('/animal/edit/{id}', [DashboardController::class, 'updateAnimal']);
+
 Route::post('/brand/register', [DashboardController::class, 'registerBrand']);
 Route::patch('/location/edit/{id}', [DashboardController::class, 'editLocation']);
 Route::post('/location/register', [DashboardController::class, 'registerLocation']);
