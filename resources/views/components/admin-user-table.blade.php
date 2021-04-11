@@ -10,12 +10,12 @@
         </thead>
         <tbody>
             @foreach($users as $user)
-            @if($user->id !== Auth::user()->id)
+            @if($user->id !== Auth::user()->id && $user->role_id == 1)
             <tr>
               <th scope="row">{{$user->id}}</th>
               <td>{{$user->name}} {{$user->surname}}</td>
               <td>{{$user->role->role}}</td>
-              <td><a href="/dashboard/account/user/{{$user->id}}" class="btn btn-warning">Edit</a></td>
+              @if(Auth::user()->role_id == 3)<td><a href="/dashboard/account/user/{{$user->id}}" class="btn btn-warning">Edit</a></td>@else <td></td>@endif
             </tr>
             @endif
 

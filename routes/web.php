@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/transfer/request/', [DashboardController::class, 'requestTransfer']);
+
 Route::get('/chat/room', [DashboardController::class, 'chatIndex']);
 Route::get('/chat/room/{id}', [DashboardController::class, 'chatShow']);
 Route::post('/chat/send/{id}', [DashboardController::class, 'sendMessage']);

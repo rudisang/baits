@@ -62,6 +62,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Keeper');
     }
 
+    public function transferrequests() {
+        return $this->hasMany('App\Models\TransferRequest');
+    }
+
     public function location(){
         return $this->hasOne('App\Models\Location');
     }

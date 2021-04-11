@@ -25,7 +25,8 @@
       <div class="card" style="border: none">
           <h5 class="card-header" style="background: #fff">Operator Dash <a href="/chat/room" style="float:right" class="btn btn-outline-info">Chat</a></h5>
           <div class="card-body">
-              <h3 class="text-center" style="color:grey">N/A</h3>
+              <x-admin-user-table />
+              <!-- Requests Table -->
 
           </div>
         </div>
@@ -73,6 +74,8 @@
 @endif
 
 @if(Auth::user()->role_id == 1)
+
+
 <!-- Farmer Dashboard Views -->
 <section class="container my-4">
   <div class="card" style="border: none">
@@ -100,16 +103,6 @@
 
  
 @if(Auth::user()->brand)
-<section class="container my-4">
-    <div class="card" style="border: none">
-        <h5 class="card-header" style="background: #fff">My Animals</h5>
-        <div class="card-body">
-          <a href="/animal/create" class="btn btn-info">Add Animals</a>
-            <x-user-animals-table />
-        </div>
-    </div>
-  </section>
-
 <section class="container my-4" id="brand" style="display:none">
   <div class="card" style="border: none">
       <h5 class="card-header" style="background: #fff">Brand</h5>
@@ -121,6 +114,64 @@
       </div>
   </div>
 </section>
+
+@if(Auth::user()->transferrequests->count() > 0 )
+<section class="container my-4">
+    <div class="card" style="border: none">
+        <h5 class="card-header" style="background: #fff">Transfer Requests</h5>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#EID</th>
+                    <th scope="col">Progress</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach(Auth::user()->transferrequests as $request)
+                
+                    <tr>
+                      <th scope="row">{{$request->eid}}</th>
+                      @if(!$request->status)
+                      <td>Under review <div class="progress">
+                         <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                        </div> </td>
+                      @else
+                      <td>Complete<div class="progress">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                        </div> </td>
+                      @endif
+                    
+                    </tr>
+             
+        
+                    @endforeach
+        
+            
+         
+                </tbody>
+              </table>
+     
+       
+       
+        </div>
+    </div>
+  </section>
+@else
+
+@endif
+
+<section class="container my-4">
+    <div class="card" style="border: none">
+        <h5 class="card-header" style="background: #fff">My Animals</h5>
+        <div class="card-body">
+          <a href="/animal/create" class="btn btn-info">Add Animals</a>
+            <x-user-animals-table />
+        </div>
+    </div>
+  </section>
+
+
 @endif
 @endif
 
@@ -143,6 +194,7 @@
   function show(){
     if(bool){
       brand.style.display = "block";
+ 
       bool = false
     }else{
       brand.style.display = "none";

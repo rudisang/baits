@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\Brand;
 use App\Models\Message;
 use App\Models\Animal;
+use App\Models\TransferRequest;
 use Auth;
 
 class DashboardController extends Controller
@@ -300,6 +301,59 @@ class DashboardController extends Controller
         ]);
 
         return back()->with('success','sent');
+    }
+
+    public function requestTransfer(Request $request)
+    {
+        $request->validate([
+            'keeper_id'=> 'required|string|max:255',
+            'omang' => 'required|image|max:1999',
+            'affidavit'=> 'required|image|max:1999',
+            'other_docs'=> 'image|max:1999',
+        ]);
+
+        if($request->hasFile('omang')){
+            $omang = $request->omang->getClientOriginalName().time().'.'.$request->omang->extension();  
+
+       $request->omang->move(public_path('documents'), $omang);
+       
+        }
+        
+        if($request->hasFile('affidavit')){
+            $affidavit = $request->affidavit->getClientOriginalName().time().'.'.$request->affidavit->extension();  
+ 
+          $request->affidavit->move(public_path('documents'), $affidavit);
+        }
+
+        if($request->hasFile('other_docs')){
+            $other_docs = $request->other_docs->getClientOriginalName().time().'.'.$request->other_docs->extension();  
+ 
+          $request->other_docs->move(public_path('documents'), $other_docs);
+        }
+
+       // $from = Auth::user()->name." ".Auth::user()->surname."/".Auth::user()->keeper->id;
+       $from = Auth::user()->id;
+        $to_user = User::join('keepers', 'keepers.user_id', '=', 'users.id')->where('keepers.id' ,'=', intval($request->keeper_id))->first();
+        $to = $to_user->id;
+
+        $brand = Auth::user()->brand;
+        
+
+        $tr = new TransferRequest;
+        $tr->eid = $request->eid;
+        $tr->omang = $omang;
+        $tr->affidavit = $affidavit;
+        if($request->hasFile('other_docs')){
+            $tr->other_docs = $other_docs;
+        }
+        $tr->from_id = $from;
+        $tr->to_id = $to;
+        $tr->status = 0;
+        $tr->old_brand = $brand->brand;
+        $tr->old_brand_shape = $brand->shape;
+        $tr->user_id = Auth::user()->id;
+        $tr->save();
+        return back()->with('success', 'Request Sent');
     }
 
     /**

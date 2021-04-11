@@ -54,7 +54,7 @@
                                             <label for="breed">Breed</label>
                                             <select name="breed" class="form-control" id="breed" required>
                                                     <option value="" selected disabled></option>
-                                                <?php $arr = ['Brahman','XXX', 'Simental']; ?>
+                                                <?php $arr = ['Brahman','Tuli', 'Simmentaler','Tswana','Afrikaner','Bonsmara','Charolais','Hereford','Brown-Swiss']; ?>
                                                 @foreach($arr as $item)
                                                    <option value="{{ $item }}" @if(old('breed') == $item) selected='selected' @endif> {{ $item }}</option>
                                                 @endforeach
@@ -72,7 +72,7 @@
                                                 <label for="colour">Colour</label>
                                                 <select name="colour" class="form-control" id="colour">
                                                     <option value="" selected disabled></option>
-                                                    <?php $arr = ['Blue','Black', 'Orange']; ?>
+                                                    <?php $arr = ['Tlhaba','Tlhabana', 'Tshumu','Tshunyana','Nala','Nalana','Khunwana','Ntsho','Thokwa','Thokwana']; ?>
                                                     @foreach($arr as $item)
                                                        <option value="{{ $item }}" @if(old('colour') == $item) selected='selected' @endif> {{ $item }}</option>
                                                     @endforeach
