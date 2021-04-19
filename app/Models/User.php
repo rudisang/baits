@@ -58,6 +58,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Message');
     }
 
+    public function permits() {
+        return $this->hasMany('App\Models\Permit');
+    }
+
     public function keeper() {
         return $this->hasOne('App\Models\Keeper');
     }

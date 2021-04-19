@@ -17,6 +17,7 @@ class Animal extends Model
         'species',
         'breed',
         'age',
+        'transfer'
     ];
 
     

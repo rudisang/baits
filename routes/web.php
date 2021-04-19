@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnimalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,14 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/search', [AnimalController::class, 'search']);
 
-Route::post('/transfer/request/', [DashboardController::class, 'requestTransfer']);
+
+Route::patch('/permit/action/{id}', [DashboardController::class, 'permitAction']);
+Route::get('/permits', [DashboardController::class, 'permits']);
+Route::post('/permit/apply', [DashboardController::class, 'permitApply']);
+Route::patch('/request/action/{id}', [DashboardController::class, 'requestAction']);
+Route::post('/transfer/request/{id}', [DashboardController::class, 'requestTransfer']);
 
 Route::get('/chat/room', [DashboardController::class, 'chatIndex']);
 Route::get('/chat/room/{id}', [DashboardController::class, 'chatShow']);

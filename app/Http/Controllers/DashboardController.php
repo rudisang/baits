@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\Brand;
 use App\Models\Message;
 use App\Models\Animal;
+use App\Models\Permit;
 use App\Models\TransferRequest;
 use Auth;
 
@@ -256,6 +257,7 @@ class DashboardController extends Controller
             'species' => $request->species,
             'breed' => $request->breed,
             'age' => $request->age,
+            'transfer' => 0,
         ]);
 
         return redirect('/dashboard')->with('success', 'Record Added');
@@ -303,8 +305,8 @@ class DashboardController extends Controller
         return back()->with('success','sent');
     }
 
-    public function requestTransfer(Request $request)
-    {
+    public function requestTransfer(Request $request,$id)
+    { 
         $request->validate([
             'keeper_id'=> 'required|string|max:255',
             'omang' => 'required|image|max:1999',
@@ -334,8 +336,9 @@ class DashboardController extends Controller
        // $from = Auth::user()->name." ".Auth::user()->surname."/".Auth::user()->keeper->id;
        $from = Auth::user()->id;
         $to_user = User::join('keepers', 'keepers.user_id', '=', 'users.id')->where('keepers.id' ,'=', intval($request->keeper_id))->first();
-        $to = $to_user->id;
-
+        
+        $to = $to_user->user_id;
+       
         $brand = Auth::user()->brand;
         
 
@@ -353,7 +356,41 @@ class DashboardController extends Controller
         $tr->old_brand_shape = $brand->shape;
         $tr->user_id = Auth::user()->id;
         $tr->save();
+
+        $animal = Animal::find($id);
+        $animal->transfer = 1;
+        $animal->save();
         return back()->with('success', 'Request Sent');
+    }
+
+    public function requestAction(Request $request, $id){
+        $request->validate([
+            'action'=> 'required',
+        ]);
+
+        $rq = TransferRequest::find($id);
+      
+
+        //Find the animal being transferred
+        $animal = Animal::where('eid', '=', $rq->eid)->first();
+
+        //Find the new owner of the animal
+        $new_owner = User::find($rq->to_id);
+
+        //Set the brand of the animal to the brand of the new animal
+        $animal->brand_id = $new_owner->brand->id;
+        $animal->transfer = 0;
+        
+
+        //Save Request
+        $rq->status = $request->action;
+        
+        $animal->save();
+        $rq->save();
+        
+
+
+        return back()->with('success','Transfer Successful');
     }
 
     /**
@@ -362,9 +399,84 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function permits()
     {
-        //
+        $keepers = Keeper::all();
+        return view('dashboard.permits')->with('keepers',$keepers);
+    }
+
+    public function permitApply(Request $request)
+    {
+        $request->validate([
+            'from'=> 'required',
+            'to' => 'required',
+            'animal'=> 'required',
+            'is_interzonal'=> 'required',
+            'omang' => 'required|image',
+            'affidavit' => 'required|image',
+            'other_docs' => 'image',
+        ]);
+
+        if($request->hasFile('omang')){
+            $omang = $request->omang->getClientOriginalName().time().'.'.$request->omang->extension();  
+
+       $request->omang->move(public_path('documents'), $omang);
+       
+        }
+        
+        if($request->hasFile('affidavit')){
+            $affidavit = $request->affidavit->getClientOriginalName().time().'.'.$request->affidavit->extension();  
+ 
+          $request->affidavit->move(public_path('documents'), $affidavit);
+        }
+
+        if($request->hasFile('other_docs')){
+            $other_docs = $request->other_docs->getClientOriginalName().time().'.'.$request->other_docs->extension();  
+ 
+          $request->other_docs->move(public_path('documents'), $other_docs);
+        }
+        
+
+        $permit = new Permit;
+
+        $to_user = User::join('keepers', 'keepers.user_id', '=', 'users.id')->where('keepers.id' ,'=', intval($request->to))->first();
+        $to = $to_user->user_id;
+        $from_user = User::join('keepers', 'keepers.user_id', '=', 'users.id')->where('keepers.id' ,'=', intval($request->from))->first();
+        $from = $from_user->user_id;
+
+        $permit->omang = $omang;
+        $permit->affidavit = $affidavit;
+        if($request->hasFile('other_docs')){
+            $permit->other_docs = $other_docs;
+        }
+
+        $permit->from = $from;
+        $permit->to = $to;
+
+        $user_from = User::find($from);
+        $user_to = User::find($to);
+
+        $permit->location_origin = $user_from->location->id;
+        $permit->location_destination = $user_to->location->id;
+
+        $permit->is_interzonal = $request->is_interzonal;
+
+        $permit->status = 0;
+
+        $permit->user_id = Auth::user()->id;
+        $animals_array = array();
+
+        foreach($request->animal as $anims){
+            array_push($animals_array, $anims);
+        }
+
+        $animals = json_encode($animals_array);
+
+        $permit->animal = $animals;
+
+        $permit->save();
+
+        return back()->with('success','Permit Application Successful');
     }
 
     /**
@@ -373,9 +485,21 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function permitAction(Request $request, $id)
     {
-        //
+        $request->validate([
+            'action'=> 'required',
+            'validity' => 'required|date|after:tomorrow',
+        ]);
+
+        $permit = Permit::find($id);
+
+        $permit->status = intval($request->action);
+        $permit->validity = $request->validity;
+
+        $permit->save();
+
+        return back()->with('info', 'Permit Updated');
     }
 
     /**

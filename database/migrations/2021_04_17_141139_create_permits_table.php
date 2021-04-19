@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransferRequestsTable extends Migration
+class CreatePermitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateTransferRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transfer_requests', function (Blueprint $table) {
+        Schema::create('permits', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('eid');
-            $table->string('from_id');
-            $table->string('to_id');
-            $table->string('old_brand');
-            $table->string('old_brand_shape');
+            $table->integer('user_id');
+            $table->integer('from');
+            $table->integer('to');
+            $table->integer('location_origin');
+            $table->integer('location_destination');
+            $table->boolean('is_interzonal');
+            $table->text('animal');
             $table->string('affidavit');
             $table->string('omang');
             $table->string('other_docs')->nullable();
-            $table->boolean('status');
-            $table->text('message')->nullable();
+            $table->integer('status');
+            $table->date('validity')->nullable();
             $table->timestamps();
         });
     }
@@ -37,6 +38,6 @@ class CreateTransferRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transfer_requests');
+        Schema::dropIfExists('permits');
     }
 }

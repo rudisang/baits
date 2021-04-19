@@ -19,6 +19,7 @@ class TransferRequest extends Model
       'affidavit',
       'omang',
       'other_docs',
+      'message',
     ];
 
     public function user() {

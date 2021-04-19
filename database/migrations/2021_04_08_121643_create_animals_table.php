@@ -23,6 +23,7 @@ class CreateAnimalsTable extends Migration
             $table->string('species');
             $table->string('breed');
             $table->integer('age');
+            $table->boolean('transfer');
             $table->timestamps();
         });
     }

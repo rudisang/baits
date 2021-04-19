@@ -213,7 +213,7 @@ img{ max-width:100%;}
                                     <div class="chat_people">
                                       <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                       <div class="chat_ib">
-                                        <h5>Operator <span class="chat_date">Dec 25</span></h5>
+                                        <h5>Operator <span class="chat_date">Apr</span></h5>
                                       </div>
                                     </div>
                                   </div>
@@ -223,7 +223,7 @@ img{ max-width:100%;}
                                 <div class="chat_people">
                                   <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                                   <div class="chat_ib">
-                                    <h5>Police <span class="chat_date">Dec 25</span></h5>
+                                    <h5>Police <span class="chat_date">Apr</span></h5>
                                   </div>
                                 </div>
                               </div>

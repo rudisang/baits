@@ -17,8 +17,31 @@
 </section>
 
 @if(Auth::user()->role_id == 4)
-    <section class="container my-4">
+<section class="container my-4">
+    <div class="card" style="border:none">
+      <h5 class="card-header">Permit Requests</h5>
+      <div class="card-body">
+        <x-permits />
+      </div>
+    </div>
+  </section>
 
+    <section class="container my-4">
+      <div class="card" style="border:none">
+        <h5 class="card-header">Transfer Requests</h5>
+        <div class="card-body">
+          <x-transfer-requests />
+        </div>
+      </div>
+    </section>
+
+    <section class="container my-4">
+      <div class="card" style="border:none">
+        <h5 class="card-header">Transfer History</h5>
+        <div class="card-body">
+          <x-transfer-history />
+        </div>
+      </div>
     </section>
 
     <section class="container my-4">
@@ -87,6 +110,7 @@
 
           @if(Auth::user()->location)
           @if(Auth::user()->brand)  @else <x-brand-form-modal />@endif
+          <a href="/permits" class="btn btn-secondary my-3">Permits</a> 
           <div class="my-2"><x-edit-location-form /> <br><a class="btn btn-info" id="brand-btn" onclick="show()">View Brand</a></div>
           @else
           <x-location-form />

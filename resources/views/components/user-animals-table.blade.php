@@ -52,9 +52,11 @@
                     <td>{{$animal->breed}}</td>
                     <td>@if(intval($animal->age/12) > 0) @if(intval($animal->age/12) > 1){{intval($animal->age/12)}}years @else{{intval($animal->age/12)}}year @endif @else @endif @if($animal->age%12 > 0) @if($animal->age%12 > 1){{$animal->age%12}}months @else{{$animal->age%12}}month @endif @else @endif</td>
                     <td>{{$animal->brand->brand}}</td>
-                    <td> <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#t{{$animal->id}}">
+                    <td> @if($animal->transfer)<button type="button" class="btn btn-secondary disabled" >
                       Transfer
-                    </button> <a href="/animal/edit/{{$animal->id}}" class="btn btn-warning">Edit</a></td>
+                    </button> @else<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#t{{$animal->id}}">
+                      Transfer
+                    </button> @endif <a href="/animal/edit/{{$animal->id}}" class="btn btn-warning">Edit</a></td>
                   </tr>
              @endif
              <!-- Button trigger modal -->
@@ -71,7 +73,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                  <form action="/transfer/request/" method="POST" enctype="multipart/form-data">
+                  <form action="/transfer/request/{{$animal->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label for="">Recipient Keeper ID</label>
